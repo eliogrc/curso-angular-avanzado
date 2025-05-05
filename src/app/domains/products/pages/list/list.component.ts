@@ -1,8 +1,7 @@
-import { Component, Input, SimpleChanges, inject, signal, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, inject, signal, OnInit, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLinkWithHref } from '@angular/router';
 import { ProductComponent } from '@products/components/product/product.component';
-import { HeaderComponent } from '@shared/components/header/header.component';
 import { Product } from '@shared/models/product.model';
 import { CartService } from '@shared/services/cart.service';
 import { ProductService } from '@shared/services/product.service';
@@ -11,7 +10,7 @@ import { Category } from '@shared/models/category.model';
 
 @Component({
     selector: 'app-list',
-    imports: [CommonModule, ProductComponent, HeaderComponent, RouterLinkWithHref],
+    imports: [CommonModule, ProductComponent, RouterLinkWithHref],
     templateUrl: './list.component.html'
 })
 export default class ListComponent implements OnInit, OnChanges {
@@ -27,7 +26,7 @@ export default class ListComponent implements OnInit, OnChanges {
     this.getCategories();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.getProducts();
   }
 
@@ -41,8 +40,8 @@ export default class ListComponent implements OnInit, OnChanges {
       next: (products) => {
         this.products.set(products);
       },
-      error: () => {
-        
+      error: (e) => {
+         console.error(e);
       }
     })
   }
@@ -53,8 +52,8 @@ export default class ListComponent implements OnInit, OnChanges {
       next: (data) => {
         this.categories.set(data);
       },
-      error: () => {
-        
+      error: (e) => {
+         console.error(e);
       }
     })
   }
